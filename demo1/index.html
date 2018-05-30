@@ -19,6 +19,11 @@
         socket.send('你好')
     };
 
+    // 拿数据
+    socket.onmessage = function (event) {
+        alert(event.data);
+    }
+
 </script>
 </body>
 </html>
