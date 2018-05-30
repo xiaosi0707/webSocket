@@ -136,10 +136,14 @@
 </div>
 <script src="jquery-3.2.1.min.js"></script>
 <script>
+    let userInfo = {
+        'userName': '',
+        'content': ''
+    };
     $('#enter').on('click', function () {
         // 获取用户名
-        let userName = $('#name').val();
-        if (userName == '') {
+        userInfo.userName = $('#name').val();
+        if (userInfo.userName == '') {
             alert('昵称不能为空！');
             return false;
         }
@@ -151,14 +155,22 @@
         let socket = new WebSocket('ws://127.0.0.1:2347');
         // 打开socket应用，同时发送一条用户一上线广播
         socket.onopen = function () {
-            socket.send(userName)
+            socket.send(JSON.stringify(userInfo)); // send()只能发送字符串
         };
         // 处理接收到的消息
         socket.onmessage = function (event) {
             // 消息内容在事件对象event下
-            let { data } = event;
-            $('.phone').append(`<div class="sys"><p>系统消息：[${data}]上线了</p></div>`);
+            console.log(event);
+            let data = JSON.parse(event.data);
+            $('.phone').append(`<div class="sys"><p>系统消息：${data.userName}上线了</p></div>`);
+            $('.phone').append(data.userName + ':' + data.content);
         }
+
+        // 发送聊天内容
+        $('#socket_send').on('click', function () {
+            userInfo.content = $('#socket_text').val(); // 获取聊天内容
+            socket.send(JSON.stringify(userInfo));
+        });
 
 
     })
