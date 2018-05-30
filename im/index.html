@@ -14,7 +14,7 @@
             border: 1px solid #ddd;
             padding: 10px;
             height: 500px;
-            background-color: #fff;
+            background-color: #EBEBEB;
             margin: auto;
             overflow: auto;
         }
@@ -32,7 +32,7 @@
 
         .name {
             clear: both;
-            color: #ddd;
+            color: #ccc;
         }
 
         .text {
@@ -50,13 +50,13 @@
         }
 
         .left .text {
-            background-color: #89cff0;
-            color: #fff;
+            background-color: #FFFFFF;
+            color: #1A3E10;
         }
 
         .right .text {
-            background-color: #71A32A;
-            color: #fff;
+            background-color: #A1E85C;
+            color: #1A3E10;
         }
 
         .sys {
@@ -166,7 +166,17 @@
             if (data.isSys) {
                 $('.phone').append(`<div class="sys"><p>系统消息：${data.userName}上线了</p></div>`);
             } else {
-                $('.phone').append(data.userName + ':' + data.content + '<br/>');
+                if (userInfo.userName === data.userName) {
+                    $('.phone').append(` <div class="info right">
+                <div class="name">${data.userName}</div>
+                <div class="text">${data.content}</div>
+            </div>`);
+                } else {
+                    $('.phone').append(`<div class="info left">
+                <div class="name">${data.userName}</div>
+                <div class="text">${data.content}</div>
+            </div>`)
+                }
             }
         }
 
