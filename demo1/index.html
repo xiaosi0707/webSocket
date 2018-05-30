@@ -26,8 +26,15 @@
         alert(event.data);
     }
 
+    // 关闭时候触发
+    socket.onclose = function () {
+        alert('我要走了！')
+    }
+    
     // 关闭，放在任何位置都可以
-    socket.close(); 
+    socket.close();
+
+
 
 </script>
 </body>
