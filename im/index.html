@@ -151,13 +151,13 @@
         let socket = new WebSocket('ws://127.0.0.1:2347');
         // 打开socket应用，同时发送一条用户一上线广播
         socket.onopen = function () {
-            socket.send(userName + '上线了')
+            socket.send(userName)
         };
         // 处理接收到的消息
         socket.onmessage = function (event) {
             // 消息内容在事件对象event下
             let { data } = event;
-            $('.phone').append(data);
+            $('.phone').append(`<div class="sys"><p>系统消息：[${data}]上线了</p></div>`);
         }
 
 
