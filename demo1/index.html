@@ -12,11 +12,13 @@
     * 分析network请求，并且和http进行对比讲解
     * */
     let socket = new WebSocket('ws://127.0.0.1:2347');
-
     //打开
     socket.onopen = function () {
         // 发送消息的方法，send(消息内容)，消息内容必须是字符串
-        socket.send('你好')
+        socket.send('你好') // 字符串
+        socket.send([1,2,3,4]) // 转为了字符      toString()方法可以强制转换为字符
+        socket.send({'a': '1', 'b': '2'})   // 转为了[object][object]
+        socket.send(JSON.stringify({'a': '1', 'b': '2'}))   // 转为json字符串
     };
 
     // 拿数据
