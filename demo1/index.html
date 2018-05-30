@@ -11,7 +11,14 @@
     * webSocket特点：创建一个webSocket应用是立刻就会像服务器发送请求（握手过程，建立webSocket连接）
     * 分析network请求，并且和http进行对比讲解
     * */
-    let socket = new WebSocket('ws://127.0.0.1:2347'); //
+    let socket = new WebSocket('ws://127.0.0.1:2347');
+
+    //打开
+    socket.onopen = function () {
+        // 发送消息的方法，send(消息内容)，消息内容必须是字符串
+        socket.send('你好')
+    };
+
 </script>
 </body>
 </html>
