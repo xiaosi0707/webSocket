@@ -12,8 +12,10 @@
     * 分析network请求，并且和http进行对比讲解
     * */
     let socket = new WebSocket('ws://127.0.0.1:2347');
+    console.log(socket.readyState); // 0
     //打开
     socket.onopen = function () {
+        console.log(socket.readyState); // 1
         // 发送消息的方法，send(消息内容)，消息内容必须是字符串
         socket.send('你好') // 字符串
         socket.send([1,2,3,4]) // 转为了字符      toString()方法可以强制转换为字符
@@ -28,11 +30,12 @@
 
     // 关闭时候触发
     socket.onclose = function () {
+        console.log(socket.readyState); // 3
         alert('我要走了！')
     }
-    
-    // 关闭，放在任何位置都可以
-    socket.close();
+
+    // 关闭，放在任何位置都可以；后续代码将不再执行
+   socket.close();
 
 
 
