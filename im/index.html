@@ -166,16 +166,23 @@
             if (data.isSys) {
                 $('.phone').append(`<div class="sys"><p>系统消息：${data.userName}上线了</p></div>`);
             } else {
-                if (userInfo.userName === data.userName) {
-                    $('.phone').append(` <div class="info right">
+            //     if (userInfo.userName === data.userName) {
+            //         $('.phone').append(` <div class="info right">
+            //     <div class="name">${data.userName}</div>
+            //     <div class="text">${data.content}</div>
+            // </div>`);
+            //     } else {
+            //         $('.phone').append(`<div class="info left">
+            //     <div class="name">${data.userName}</div>
+            //     <div class="text">${data.content}</div>
+            // </div>`)
+            //     }
+                // 提升用户体验(网络延迟)
+                if (userInfo.userName !== data.userName) {
+                    $('.phone').append(` <div class="info left">
                 <div class="name">${data.userName}</div>
                 <div class="text">${data.content}</div>
             </div>`);
-                } else {
-                    $('.phone').append(`<div class="info left">
-                <div class="name">${data.userName}</div>
-                <div class="text">${data.content}</div>
-            </div>`)
                 }
             }
         }
@@ -184,6 +191,16 @@
         $('#socket_send').on('click', function () {
             userInfo.isSys = 0; // 发布聊天内容时设置为"非系统消息"
             userInfo.content = $('#socket_text').val(); // 获取聊天内容
+            /*
+            *
+            * 提升用户体验（网络延时）：
+            *   自己发布的内容立即显示出来不走网络
+            *   对方看到的内容可能会延迟，但是对于对方来说都是即时获取到的因为他不知道你什么时候发送出去的
+            * */
+            $('.phone').append(`<div class="info right">
+                <div class="name">${userInfo.userName}</div>
+                 <div class="text">${userInfo.content}</div>
+            </div>`)
             $('#socket_text').val('') // 发送完成清空
             socket.send(JSON.stringify(userInfo));
         });
