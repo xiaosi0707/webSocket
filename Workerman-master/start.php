@@ -18,7 +18,7 @@ function handle_message($connection, $data)
     global $text_worker;
     foreach($text_worker->connections as $conn)
     {
-        $conn->send("user[{$connection->uid}] said: $data");
+        $conn->send($data);
     }
 }
 
